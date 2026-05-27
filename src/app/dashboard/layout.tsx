@@ -60,7 +60,7 @@ export default async function DashboardLayout({
               </div>
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, margin: 0 }}>{profile?.full_name || profile?.username}</h3>
               <p className="muted" style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>@{profile?.username}</p>
-              <Link href={`/profile/${profile?.username}`} className="btn btn-secondary" style={{ width: '100%', padding: '0.5rem', fontSize: '0.75rem', marginTop: '1rem' }}>
+              <Link href={`/profile/${user.id}`} className="btn btn-secondary" style={{ width: '100%', padding: '0.5rem', fontSize: '0.75rem', marginTop: '1rem' }}>
                 View Public Profile
               </Link>
             </div>

@@ -138,7 +138,7 @@ export default async function Home() {
 
                 <div className="grid" style={{ marginBottom: '8rem' }}>
                   {profiles.map((profile: Profile) => {
-                    const profileLink = `/profile/${encodeURIComponent(profile.username || profile.id)}`;
+                    const profileLink = `/profile/${encodeURIComponent(profile.id)}`;
                     return (
                       <Link href={profileLink} key={profile.id} className="card" style={{ gridColumn: 'span 3', textDecoration: 'none', color: 'inherit' }}>
                         <div style={{ 
@@ -202,7 +202,7 @@ export default async function Home() {
                       borderTop: '1px solid var(--border)'
                     }}>
                       {project.profiles ? (
-                        <Link href={`/profile/${encodeURIComponent(project.profiles.username || project.profiles.id || project.user_id)}`} style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Link href={`/profile/${encodeURIComponent(project.profiles.id)}`} style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--foreground)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                           {project.profiles.avatar_url && (
                             <img src={project.profiles.avatar_url} alt="" style={{ width: '20px', height: '20px', borderRadius: '6px', objectFit: 'cover' }} />
                           )}

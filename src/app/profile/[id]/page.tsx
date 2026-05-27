@@ -23,6 +23,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
 
   let profile = null
 
+  // Always try ID lookup first (most efficient)
   if (UUID_PATTERN.test(profileKey)) {
     const { data } = await supabase
       .from('profiles')
@@ -33,11 +34,12 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
     profile = data
   }
 
+  // Fallback to username if ID lookup failed or key is not a UUID
   if (!profile) {
     const { data } = await supabase
       .from('profiles')
       .select('*')
-      .ilike('username', profileKey)
+      .eq('username', profileKey)
       .maybeSingle()
 
     profile = data
