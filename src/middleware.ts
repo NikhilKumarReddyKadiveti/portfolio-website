@@ -2,17 +2,15 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({
+    request,
+  })
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  })
-
   if (!supabaseUrl || !supabaseAnonKey) {
-    return response
+    return supabaseResponse
   }
 
   const supabase = createServerClient(
@@ -24,39 +22,23 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set({
-              name,
-              value,
-              ...options,
-            })
+          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
+          supabaseResponse = NextResponse.next({
+            request,
           })
-
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          })
-
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-          })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
         },
       },
     }
   )
 
-  try {
-    await supabase.auth.getUser()
-  } catch {
-    return response
-  }
+  // This will refresh session if expired - required for Server Components
+  // https://supabase.com/docs/guides/auth/server-side/nextjs
+  await supabase.auth.getUser()
 
-  return response
+  return supabaseResponse
 }
 
 export const config = {

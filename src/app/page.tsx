@@ -29,26 +29,40 @@ interface Project {
 }
 
 export default async function Home() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  // Fetch profiles with project counts
-  const { data: profilesData } = await supabase
-    .from('profiles')
-    .select('*, projects(count)')
-    .order('updated_at', { ascending: false })
-    .limit(8);
+  let user = null;
+  let profiles: Profile[] = [];
+  let recentProjects: Project[] = [];
 
-  const profiles = (profilesData as unknown as Profile[]) || [];
+  try {
+    const supabase = await createClient();
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+    user = authUser;
+    
+    // Fetch profiles with project counts
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('*, projects(count)')
+      .order('updated_at', { ascending: false })
+      .limit(8);
 
-  // Fetch recent projects. If the profile join fails, we still want the project data.
-  const { data: projectsData } = await supabase
-    .from('projects')
-    .select('*, profiles(id, full_name, username, avatar_url)')
-    .order('created_at', { ascending: false })
-    .limit(6);
+    if (profilesData) {
+      profiles = profilesData as unknown as Profile[];
+    }
 
-  const recentProjects = (projectsData as unknown as Project[]) || [];
+    // Fetch recent projects
+    const { data: projectsData } = await supabase
+      .from('projects')
+      .select('*, profiles(id, full_name, username, avatar_url)')
+      .order('created_at', { ascending: false })
+      .limit(6);
+
+    if (projectsData) {
+      recentProjects = projectsData as unknown as Project[];
+    }
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error);
+    // Continue rendering with empty arrays if fetching fails
+  }
 
   return (
     <>
