@@ -81,7 +81,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
           }} />
 
           <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', gap: '4rem', alignItems: 'center' }}>
+            <div className="profile-hero-row">
               <div style={{ 
                 width: '180px', 
                 height: '180px', 
@@ -103,9 +103,9 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
                   profile.full_name?.[0] || profile.username?.[0] || '?'
                 )}
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                  <h1 style={{ fontSize: '4rem', fontWeight: 900, margin: 0, letterSpacing: '-0.04em' }}>{profile.full_name || profile.username || 'Elite Creator'}</h1>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="profile-title-row">
+                  <h1 style={{ fontSize: '4rem', fontWeight: 900, margin: 0 }}>{profile.full_name || profile.username || 'Elite Creator'}</h1>
                   {profile.company && (
                     <span className="glass" style={{ 
                       padding: '0.4rem 1rem', 
@@ -123,7 +123,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
                 <p style={{ fontSize: '1.5rem', marginBottom: '2.5rem', maxWidth: '800px', color: 'var(--muted)', lineHeight: 1.5 }}>
                   {profile.bio || 'Architecting digital experiences through code and design.'}
                 </p>
-                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                <div className="responsive-actions" style={{ alignItems: 'center' }}>
                   {profile.website && (
                     <a href={profile.website} target="_blank" className="btn btn-secondary" style={{ padding: '1rem 2rem' }}>
                       Official Portfolio
@@ -157,10 +157,10 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
                           <img src={project.image_url} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
                       )}
-                      <div style={{ padding: '3rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                      <div className="project-detail-body">
+                        <div className="project-detail-heading">
                           <h3 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0 }}>{project.title}</h3>
-                          <div style={{ display: 'flex', gap: '1.5rem' }}>
+                          <div className="responsive-actions">
                             {project.live_url && <a href={project.live_url} target="_blank" style={{ fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Live Experience</a>}
                             {project.github_url && <a href={project.github_url} target="_blank" style={{ fontWeight: 700, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--muted)' }}>Technical Source</a>}
                           </div>
@@ -188,7 +188,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
               </div>
 
               <div style={{ gridColumn: 'span 4' }}>
-                <div style={{ position: 'sticky', top: '120px' }}>
+                <div className="sticky-panel">
                   <div style={{ marginBottom: '4rem' }}>
                     <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>Arsenal<span style={{ color: 'var(--accent)' }}>.</span></h2>
                     <p className="muted">Core competencies and specializations.</p>

@@ -32,10 +32,10 @@ export default async function DashboardLayout({
   return (
     <>
       <Header />
-      <div className="container" style={{ display: 'flex', minHeight: 'calc(100vh - 80px)', gap: '2rem', padding: '2rem' }}>
+      <div className="container dashboard-shell">
         {/* Sidebar Nav */}
-        <aside style={{ width: '280px', flexShrink: 0 }}>
-          <div className="card" style={{ padding: '1.5rem', position: 'sticky', top: '100px' }}>
+        <aside className="dashboard-sidebar">
+          <div className="card dashboard-sidebar-card">
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
               <div style={{ 
                 width: '80px', 
@@ -88,7 +88,7 @@ export default async function DashboardLayout({
         </aside>
 
         {/* Main Content */}
-        <main style={{ flex: 1 }}>
+        <main className="dashboard-main">
           {children}
         </main>
       </div>

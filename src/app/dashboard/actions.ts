@@ -3,19 +3,61 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 
+const IMAGE_BUCKET = 'portfolio-images'
+
+function getTextValue(formData: FormData, name: string) {
+  const value = formData.get(name)
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+async function uploadImage(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  formData: FormData,
+  fileField: string,
+  urlField: string,
+  folder: string
+) {
+  const file = formData.get(fileField)
+  const url = getTextValue(formData, urlField)
+
+  if (file instanceof File && file.size > 0) {
+    if (!file.type.startsWith('image/')) {
+      throw new Error('Please upload a valid image file.')
+    }
+
+    const extension = file.name.split('.').pop()?.replace(/[^a-z0-9]/gi, '').toLowerCase() || 'jpg'
+    const path = `${userId}/${folder}/${crypto.randomUUID()}.${extension}`
+    const { error } = await supabase.storage
+      .from(IMAGE_BUCKET)
+      .upload(path, file, {
+        contentType: file.type,
+        upsert: false,
+      })
+
+    if (error) throw error
+
+    const { data } = supabase.storage.from(IMAGE_BUCKET).getPublicUrl(path)
+    return data.publicUrl
+  }
+
+  return url
+}
+
 export async function addProject(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) throw new Error('Unauthorized')
+  const imageUrl = await uploadImage(supabase, user.id, formData, 'image_file', 'image_url', 'projects')
 
   const project = {
     user_id: user.id,
-    title: formData.get('title') as string,
-    description: formData.get('description') as string,
-    live_url: formData.get('live_url') as string,
-    github_url: formData.get('github_url') as string,
-    image_url: formData.get('image_url') as string,
+    title: getTextValue(formData, 'title'),
+    description: getTextValue(formData, 'description'),
+    live_url: getTextValue(formData, 'live_url'),
+    github_url: getTextValue(formData, 'github_url'),
+    image_url: imageUrl,
   }
 
   const { error } = await supabase.from('projects').insert(project)
@@ -72,13 +114,14 @@ export async function updateProject(formData: FormData) {
 
   if (!user) throw new Error('Unauthorized')
 
-  const id = formData.get('id') as string
+  const id = getTextValue(formData, 'id')
+  const imageUrl = await uploadImage(supabase, user.id, formData, 'image_file', 'image_url', 'projects')
   const project = {
-    title: formData.get('title') as string,
-    description: formData.get('description') as string,
-    live_url: formData.get('live_url') as string,
-    github_url: formData.get('github_url') as string,
-    image_url: formData.get('image_url') as string,
+    title: getTextValue(formData, 'title'),
+    description: getTextValue(formData, 'description'),
+    live_url: getTextValue(formData, 'live_url'),
+    github_url: getTextValue(formData, 'github_url'),
+    image_url: imageUrl,
   }
 
   const { error } = await supabase.from('projects').update(project).match({ id, user_id: user.id })
@@ -120,13 +163,14 @@ export async function updateProfile(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) throw new Error('Unauthorized')
+  const avatarUrl = await uploadImage(supabase, user.id, formData, 'avatar_file', 'avatar_url', 'avatars')
 
   const profile = {
-    full_name: formData.get('full_name') as string,
-    bio: formData.get('bio') as string,
-    website: formData.get('website') as string,
-    company: formData.get('company') as string,
-    avatar_url: formData.get('avatar_url') as string,
+    full_name: getTextValue(formData, 'full_name'),
+    bio: getTextValue(formData, 'bio'),
+    website: getTextValue(formData, 'website'),
+    company: getTextValue(formData, 'company'),
+    avatar_url: avatarUrl,
     updated_at: new Date().toISOString(),
   }
 
@@ -136,7 +180,7 @@ export async function updateProfile(formData: FormData) {
 
   revalidatePath('/dashboard')
   revalidatePath('/')
-  revalidatePath(`/profile/${formData.get('username')}`)
+  revalidatePath(`/profile/${getTextValue(formData, 'username')}`)
 }
 
 export async function sendJobOffer(formData: FormData) {

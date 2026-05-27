@@ -13,11 +13,7 @@ export default async function Header() {
       top: 0,
       zIndex: 100
     }}>
-      <div className="container" style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center' 
-      }}>
+      <div className="container site-header-row">
         <Link href="/" style={{ 
           fontSize: '1.5rem', 
           fontWeight: 800, 
@@ -27,7 +23,7 @@ export default async function Header() {
         }}>
           PORTFOLIO<span style={{ color: 'var(--accent)' }}>.</span>
         </Link>
-        <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+        <nav className="site-nav">
           <Link href="/#explore" style={{ color: 'var(--muted)', fontWeight: 600, fontSize: '0.9rem', transition: 'color 0.2s' }}>Explore</Link>
           
           {user ? (

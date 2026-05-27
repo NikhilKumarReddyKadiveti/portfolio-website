@@ -29,15 +29,15 @@ export default async function DashboardOverview() {
       </div>
 
       <div className="grid">
-        <div className="card" style={{ gridColumn: 'span 4', textAlign: 'center', padding: '2.5rem' }}>
+        <div className="card metric-card">
           <div style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--accent)' }}>{totalViews}</div>
           <div style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Total Reach</div>
         </div>
-        <div className="card" style={{ gridColumn: 'span 4', textAlign: 'center', padding: '2.5rem' }}>
+        <div className="card metric-card">
           <div style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--foreground)' }}>{projects?.length || 0}</div>
           <div style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Masterpieces</div>
         </div>
-        <div className="card" style={{ gridColumn: 'span 4', textAlign: 'center', padding: '2.5rem' }}>
+        <div className="card metric-card">
           <div style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--accent)' }}>{offers?.length || 0}</div>
           <div style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '0.5rem' }}>Open Opportunities</div>
         </div>
@@ -47,7 +47,7 @@ export default async function DashboardOverview() {
         <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '2rem' }}>Performance by Project</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {projects?.map(project => (
-            <div key={project.id} className="glass" style={{ padding: '1.25rem 2rem', borderRadius: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div key={project.id} className="glass performance-row" style={{ padding: '1.25rem 2rem', borderRadius: '8px' }}>
               <span style={{ fontWeight: 700 }}>{project.title}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                 <span style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>{project.project_views?.[0]?.count || 0} views</span>

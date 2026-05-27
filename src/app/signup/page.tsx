@@ -19,8 +19,8 @@ export default async function SignupPage(props: {
         )}
 
         <form action={signup} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className="form-grid" style={{ gap: '1rem' }}>
+            <div className="form-field">
               <label htmlFor="full_name" style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--foreground)', textTransform: 'uppercase' }}>Full Name</label>
               <input
                 id="full_name"
@@ -39,7 +39,7 @@ export default async function SignupPage(props: {
                 }}
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="form-field">
               <label htmlFor="username" style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--foreground)', textTransform: 'uppercase' }}>Username</label>
               <input
                 id="username"

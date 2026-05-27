@@ -53,6 +53,32 @@ create policy "Users can insert their own skills" on skills for insert with chec
 create policy "Users can update their own skills" on skills for update using (auth.uid() = user_id);
 create policy "Users can delete their own skills" on skills for delete using (auth.uid() = user_id);
 
+-- Public portfolio image uploads
+insert into storage.buckets (id, name, public)
+values ('portfolio-images', 'portfolio-images', true)
+on conflict (id) do update set public = true;
+
+create policy "Public read portfolio images" on storage.objects
+  for select using (bucket_id = 'portfolio-images');
+
+create policy "Users can upload own portfolio images" on storage.objects
+  for insert with check (
+    bucket_id = 'portfolio-images'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users can update own portfolio images" on storage.objects
+  for update using (
+    bucket_id = 'portfolio-images'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users can delete own portfolio images" on storage.objects
+  for delete using (
+    bucket_id = 'portfolio-images'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
 -- Trigger to create profile on signup
 create or replace function public.handle_new_user()
 returns trigger as $$

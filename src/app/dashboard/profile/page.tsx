@@ -12,17 +12,17 @@ export default async function ProfileDashboard() {
     .single()
 
   return (
-    <div style={{ maxWidth: '800px' }}>
+    <div className="dashboard-narrow">
       <div style={{ marginBottom: '3rem' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Professional Identity<span style={{ color: 'var(--accent)' }}>.</span></h1>
         <p className="muted">Personalize how the professional world sees you.</p>
       </div>
 
       <div className="card">
-        <form action={updateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <form action={updateProfile} encType="multipart/form-data" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <input type="hidden" name="username" value={profile?.username || ''} />
           
-          <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }}>
+          <div className="responsive-split">
             <div style={{ flexShrink: 0 }}>
               <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>Profile Picture</label>
               <div style={{ 
@@ -47,38 +47,52 @@ export default async function ProfileDashboard() {
               </div>
             </div>
             
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Avatar URL</label>
-                <input 
-                  name="avatar_url" 
-                  defaultValue={profile?.avatar_url || ''} 
-                  placeholder="https://your-image-link.com/photo.jpg"
-                  className="btn btn-secondary" 
-                  style={{ textAlign: 'left', cursor: 'text' }} 
-                />
-                <p style={{ fontSize: '0.7rem', color: 'var(--muted)' }}>Provide a direct link to your professional headshot.</p>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
+              <div className="form-field">
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Upload Profile Picture</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <input
+                    name="avatar_file"
+                    type="file"
+                    accept="image/*"
+                    className="btn btn-secondary"
+                    style={{ textAlign: 'left', cursor: 'pointer', width: '100%' }}
+                  />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--muted)', textTransform: 'uppercase' }}>or</span>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
+                  </div>
+                  <input 
+                    name="avatar_url" 
+                    defaultValue={profile?.avatar_url || ''} 
+                    placeholder="Paste image link"
+                    className="btn btn-secondary" 
+                    style={{ textAlign: 'left', cursor: 'text', fontSize: '0.85rem' }} 
+                  />
+                </div>
+                <p style={{ fontSize: '0.7rem', color: 'var(--muted)', marginTop: '0.5rem', marginBottom: 0 }}>Take a photo or upload from your device.</p>
               </div>
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className="form-grid">
+            <div className="form-field">
               <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Full Name</label>
               <input name="full_name" defaultValue={profile?.full_name || ''} className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="form-field">
               <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Company / Studio</label>
               <input name="company" defaultValue={profile?.company || ''} placeholder="e.g. Acme Corp" className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className="form-field">
             <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Professional Bio</label>
             <textarea name="bio" defaultValue={profile?.bio || ''} className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text', minHeight: '120px' }} />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className="form-field">
             <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Digital Home (URL)</label>
             <input name="website" defaultValue={profile?.website || ''} className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
           </div>

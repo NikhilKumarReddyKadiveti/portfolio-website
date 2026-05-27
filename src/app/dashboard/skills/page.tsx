@@ -11,7 +11,7 @@ export default async function SkillsDashboard() {
     .eq('user_id', user?.id)
 
   return (
-    <div style={{ maxWidth: '800px' }}>
+    <div className="dashboard-narrow">
       <div style={{ marginBottom: '3rem' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Core Arsenal<span style={{ color: 'var(--accent)' }}>.</span></h1>
         <p className="muted">Define the technical and creative weapons in your professional stack.</p>
@@ -19,12 +19,12 @@ export default async function SkillsDashboard() {
 
       <div className="card">
         <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '2rem' }}>Acquire New Skill</h2>
-        <form action={addSkill} style={{ display: 'flex', gap: '1rem', marginBottom: '3rem', alignItems: 'flex-end' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+        <form action={addSkill} className="responsive-actions" style={{ marginBottom: '3rem' }}>
+          <div className="form-field" style={{ flex: 1 }}>
             <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Expertise (e.g. Next.js)</label>
             <input name="name" required placeholder="Expertise Name" className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+          <div className="form-field" style={{ flex: 1 }}>
             <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase' }}>Sphere (e.g. Engineering)</label>
             <input name="category" placeholder="Creative Sphere" className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
           </div>

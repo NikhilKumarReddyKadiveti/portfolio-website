@@ -51,7 +51,7 @@ export default function RecruitmentForm({ recipientId, recipientName, projectId,
   }
 
   return (
-    <div className="glass" style={{ padding: '2rem', borderRadius: '24px', border: '1px solid var(--accent-glow)' }}>
+    <div className="glass" style={{ padding: 'clamp(1rem, 4vw, 2rem)', borderRadius: '8px', border: '1px solid var(--accent-glow)', minWidth: 0 }}>
       <h3 style={{ fontSize: '1.25rem', fontWeight: 900, marginBottom: '1.5rem' }}>
         Professional Inquiry for {recipientName}
       </h3>
@@ -59,23 +59,23 @@ export default function RecruitmentForm({ recipientId, recipientName, projectId,
         <input type="hidden" name="recipient_id" value={recipientId} />
         {projectId && <input type="hidden" name="project_id" value={projectId} />}
         
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+        <div className="form-grid" style={{ gap: '1rem' }}>
+          <div className="form-field">
             <label style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase' }}>Your Name</label>
             <input name="sender_name" required defaultValue={viewerData?.name || ''} className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+          <div className="form-field">
             <label style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase' }}>Your Email</label>
             <input name="sender_email" type="email" required className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+        <div className="form-field">
           <label style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase' }}>Company</label>
           <input name="sender_company" defaultValue={viewerData?.company || ''} className="btn btn-secondary" style={{ textAlign: 'left', cursor: 'text' }} />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+        <div className="form-field">
           <label style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase' }}>Offer / Opportunity Details</label>
           <textarea 
             name="offer_details" 
@@ -86,7 +86,7 @@ export default function RecruitmentForm({ recipientId, recipientName, projectId,
           />
         </div>
 
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div className="responsive-actions">
           <button type="submit" disabled={loading} className="btn btn-primary" style={{ flex: 1 }}>
             {loading ? 'Transmitting...' : 'Send Professional Offer'}
           </button>

@@ -11,7 +11,7 @@ export default async function OffersDashboard() {
     .order('created_at', { ascending: false })
 
   return (
-    <div style={{ maxWidth: '900px' }}>
+    <div className="dashboard-medium">
       <div style={{ marginBottom: '3rem' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Opportunities<span style={{ color: 'var(--accent)' }}>.</span></h1>
         <p className="muted">Direct professional inquiries from recruiters and elite organizations.</p>
@@ -20,8 +20,8 @@ export default async function OffersDashboard() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {offers && offers.length > 0 ? (
           offers.map((offer) => (
-            <div key={offer.id} className="card" style={{ padding: '2.5rem', border: '1px solid var(--accent-glow)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+            <div key={offer.id} className="card" style={{ padding: 'clamp(1rem, 4vw, 2.5rem)', border: '1px solid var(--accent-glow)' }}>
+              <div className="offer-heading-row" style={{ marginBottom: '1.5rem' }}>
                 <div>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.25rem' }}>{offer.sender_name}</h3>
                   <div style={{ color: 'var(--accent)', fontWeight: 800, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
@@ -54,7 +54,7 @@ export default async function OffersDashboard() {
                 {offer.offer_details}
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div className="responsive-actions" style={{ alignItems: 'center' }}>
                 <a href={`mailto:${offer.sender_email}`} className="btn btn-primary" style={{ padding: '0.8rem 2rem' }}>
                   Accept & Reply via Email
                 </a>

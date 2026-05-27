@@ -99,7 +99,7 @@ export default async function Home() {
               A premium showcase for the world&apos;s most talented creators. 
               Join the elite circle of developers and designers.
             </p>
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+            <div className="hero-actions">
               <Link href={user ? "/dashboard" : "/signup"} className="btn btn-primary" style={{ padding: '1rem 2.5rem' }}>
                 {user ? "Go to Dashboard" : "Start Your Journey"}
               </Link>
@@ -115,7 +115,7 @@ export default async function Home() {
           <div className="container">
             {profiles && profiles.length > 0 && (
               <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+                <div className="home-section-heading" style={{ alignItems: 'flex-end', marginBottom: '4rem' }}>
                   <div>
                     <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Elite Creators</h2>
                     <p style={{ color: 'var(--muted)', margin: 0 }}>The minds behind the next generation of digital products.</p>
@@ -166,7 +166,7 @@ export default async function Home() {
               </>
             )}
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+            <div className="home-section-heading" style={{ alignItems: 'flex-end', marginBottom: '4rem' }}>
               <div>
                 <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Masterpieces</h2>
                 <p style={{ color: 'var(--muted)', margin: 0 }}>Recent highlights from our creative community.</p>
